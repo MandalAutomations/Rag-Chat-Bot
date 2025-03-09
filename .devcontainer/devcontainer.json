@@ -1,0 +1,7 @@
+{
+    "name": "Rag Chat Bot",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "remoteUser": "root"
+}

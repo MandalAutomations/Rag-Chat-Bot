@@ -1,0 +1,7 @@
+requests
+pynacl
+openai
+chromadb
+tiktoken
+numpy
+pysqlite3-binary
