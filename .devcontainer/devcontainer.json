@@ -1,7 +1,10 @@
 {
     "name": "Rag Chat Bot",
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "Dockerfile",
+        "context": ".."
     },
-    "remoteUser": "root"
+    // "workspaceFolder": "/app",
+    "remoteUser": "root",
+    "postCreateCommand": "pip install --no-cache-dir -r requirements.txt"
 }
