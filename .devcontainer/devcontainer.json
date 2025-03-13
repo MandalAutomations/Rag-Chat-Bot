@@ -6,5 +6,5 @@
     },
     // "workspaceFolder": "/app",
     "remoteUser": "root",
-    "postCreateCommand": "pip install --no-cache-dir -r requirements.txt"
+    "postCreateCommand": "python -m ensurepip --upgrade && pip install --no-cache-dir -r requirements.txt"
 }

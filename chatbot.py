@@ -16,9 +16,9 @@ GPT_MODEL = "gpt-4"
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 collection = chroma_client.get_or_create_collection(name="docs")
 
-def read_chats():
+def read_chats(csv_filename):
     dict={}
-    with open('chat_training_2.csv', mode='r', newline='') as file:
+    with open(csv_filename, mode='r', newline='') as file:
         csv_reader = csv.reader(file)
         header = next(csv_reader)
         for row in csv_reader:
@@ -32,9 +32,6 @@ def get_embedding(text):
     return response.data[0].embedding
 
 def store_chats(chats):
-    n=0
-    length=len(chats)
-    
     for chat_id, text in chats.items():
         embedding = get_embedding(text)
         collection.add(
@@ -42,11 +39,6 @@ def store_chats(chats):
             embeddings=[embedding],
             documents=[text]
         )
-        
-        n+=1
-        if n % 100 == 0:
-            print("----------------------------------")
-            print(f"Stored chat {n}/{length}")
 
 def retrieve_top_chats(query, top_k=3):
     query_embedding = get_embedding(query)
@@ -70,12 +62,11 @@ def generate_response(query, relevant_docs):
     return response.choices[0].message.content
 
 if __name__ == "__main__":
-    chats = read_chats()
+    csv_filename="data/chat_training_2.csv"
+    chats = read_chats(csv_filename)
     store_chats(chats)
 
     while True:
-        os.system('clear')
-
         query = input("\nEnter your query (or 'exit' to quit): ")
         if query.lower() == "exit" or query.lower() == "":
             break
